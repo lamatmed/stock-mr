@@ -218,7 +218,7 @@ const Header = () => {
                    <Link href="/commandes" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
                   <FaFileInvoiceDollar className="inline mr-1" />Facutres
                    </Link>
-                   <Link href="/upadate" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white ">
+                   <Link href="/update" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white ">
                   <MdAddBox className="inline mr-1" /> Ajouter
                     </Link>
                            </>
