@@ -5,6 +5,7 @@ import "./globals.css";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import Header from "./components/Header";
+import Background from "./components/Background"; // Import du fond animé
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen flex flex-col bg-white">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
+        <Background /> {/* Ajout du fond animé ici */}
+
+        <div className="min-h-screen flex flex-col relative z-10">
           <Header />
           <main className="flex-grow">{children}</main>
           <Footer />
         </div>
+        
         <ToastContainer />
       </body>
     </html>
