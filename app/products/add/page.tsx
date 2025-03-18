@@ -168,7 +168,7 @@ export default function AddProduct() {
     );
   }
   return (
-    <div className="max-w-xl mx-auto p-4 bg-gray-50 mt-5">
+    <div className="max-w-xl mx-auto p-4 bg-white mt-5">
       <h1 className="text-2xl font-bold mb-4 text-center text-black">Nouveau Produit</h1>
 
       <div className="bg-white shadow-md rounded-lg p-4">

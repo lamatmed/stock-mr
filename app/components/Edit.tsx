@@ -129,7 +129,7 @@ export default function EditProduct({ id }: { id: string }) {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-gray-50">
+    <div className="max-w-xl mx-auto p-4 bg-white">
       <h1 className="text-2xl font-bold mb-4 text-center text-black">Modifier un Produit</h1>
 
       <div className="bg-white shadow-md rounded-lg p-4 mb-4">

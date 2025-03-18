@@ -60,7 +60,7 @@ export default function ExpiredProducts() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-gray-50 mt-5">
+    <div className="max-w-6xl mx-auto p-6 bg-white mt-5">
       <h1 className="text-3xl font-bold mb-6 text-center text-red-600">⚠️ Produits en Alerte / Expirés</h1>
 
       {loading ? (

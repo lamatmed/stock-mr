@@ -121,7 +121,7 @@ export default function UpdateProductPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-4 border rounded shadow mt-10 bg-gray-50">
+    <div className="max-w-md mx-auto p-4 border rounded shadow mt-10 bg-white">
       <h2 className="text-lg font-bold mb-4">Mise à jour d'un produit</h2>
       <button
         className="bg-blue-800 text-white p-3 rounded flex items-center gap-2 hover:bg-blue-600"

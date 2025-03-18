@@ -141,7 +141,7 @@ export default function Home() {
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   return (
-    <div className="mx-auto p-4 bg-gray-50 w-full max-w-2xl mt-5">
+    <div className="mx-auto p-4 bg-white w-full max-w-2xl mt-5">
       <h1 className="text-2xl font-bold mb-4 text-center text-black">Gestion des Produits</h1>
 
       <button 

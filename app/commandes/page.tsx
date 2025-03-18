@@ -192,7 +192,7 @@ export default function InvoicesPage() {
   
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-gray-50 mt-5">
+    <div className="max-w-xl mx-auto p-6 bg-white mt-5">
       <h1 className="text-2xl font-bold text-blue-600 flex items-center px-25">
         <FaFileInvoice className="mr-2" /> Historique des Factures
       </h1>
