@@ -232,7 +232,7 @@ const Header = () => {
                    <Link href="/clients" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
                    <FaUsersBetweenLines  className="inline mr-1" />Clients
                    </Link>
-                  <Link href="/about" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
+                  <Link href="/alerts" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
                   <FiAlertTriangle className="text-red-500 inline mr-2" />
                   Alerts
                 </Link>
