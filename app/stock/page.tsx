@@ -5,8 +5,11 @@ import { FaBarcode, FaBox, FaMoneyBillWave, FaCalendarAlt, FaCubes } from "react
 import Loader from "../components/Loader";
 import { CiBarcode } from "react-icons/ci";
 import { getAllProducts } from "../utlis/actions";
+import Image from "next/image";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 type Product = {
+  image: string | StaticImport;
   id: string;
   code: number;
   name: string;
@@ -16,6 +19,19 @@ type Product = {
   expirationDate: string;
   codeBar?: string;
 };
+
+const imageList = [
+  "/1.jpeg",
+  "/2.jpeg",
+  "/3.jpeg",
+  "/4.jpeg",
+  "/5.jpeg",
+  "/6.jpeg",
+  "/7.jpeg",
+  "/8.jpeg",
+  "/9.jpeg",
+  "/10.jpeg",
+];
 
 export default function ProductsList() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -36,6 +52,7 @@ export default function ProductsList() {
       ...product,
       expirationDate: new Date(product.expirationDate).toISOString().split("T")[0],
       codeBar: product.codeBar ?? "",
+      image: imageList[Math.floor(Math.random() * imageList.length)], // Sélectionne une image aléatoire
     }));
 
     setProducts(formattedData);
@@ -57,7 +74,7 @@ export default function ProductsList() {
     const today = new Date();
     const expDate = new Date(expirationDate);
     const timeDiff = expDate.getTime() - today.getTime();
-    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Nombre de jours restants
+    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
     if (daysLeft < 0) return <span className="text-red-600 font-bold">⚠️ Expiré</span>;
     if (daysLeft <= 20) return <span className="text-orange-500 font-bold">⚠️ Alerte ({daysLeft} jours restants)</span>;
@@ -90,6 +107,7 @@ export default function ProductsList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {currentProducts.map((p) => (
             <div key={p.id} className="bg-white rounded-xl shadow-lg p-5 transition-transform transform hover:scale-105 hover:shadow-xl">
+              <Image src={p.image} alt="Produit" className="w-full h-40 object-cover rounded-md mb-4" width={400} height={400}/>
               <h2 className="text-xl font-semibold text-gray-800 flex items-center">
                 <FaBox className="text-blue-500 mr-2" /> {p.name}
               </h2>
