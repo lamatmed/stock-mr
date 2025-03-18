@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -7,25 +6,25 @@ import { FaUserAlt, FaLock, FaSignInAlt } from 'react-icons/fa';
 import Swal from "sweetalert2";
 import { loginUser } from '../utlis/actions';
 import Loader from '../components/Loader';
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const [nom, setNom] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('/api/user'); // Ton endpoint
+        const response = await fetch('/api/user');
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
           if (userData) {
-            router.push('/'); // Redirige si déjà connecté
+            router.push('/');
           }
         }
       } catch (error) {
@@ -66,16 +65,26 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-200">
-      <div className="w-full max-w-xl p-8 bg-pink-300 shadow-lg rounded-lg">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-pink-500">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl"
+      >
         <h1 className="text-3xl font-semibold text-center text-gray-700 mb-6">
-          <FaSignInAlt className="inline mr-1 text-green-500" /> Connexion
+          <FaSignInAlt className="inline mr-2 text-green-500" /> Connexion
         </h1>
         {loading ? (
-          <Loader/>
+          <Loader />
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex items-center border-b border-gray-300 py-2">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex items-center border border-gray-300 p-3 rounded-lg shadow-sm bg-gray-50"
+            >
               <FaUserAlt className="text-blue-500 mr-3" />
               <input
                 type="text"
@@ -83,10 +92,15 @@ const Login = () => {
                 onChange={(e) => setNom(e.target.value)}
                 required
                 placeholder="Nom d'utilisateur"
-                className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400"
               />
-            </div>
-            <div className="flex items-center border-b border-gray-300 py-2">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="flex items-center border border-gray-300 p-3 rounded-lg shadow-sm bg-gray-50"
+            >
               <FaLock className="text-red-500 mr-3" />
               <input
                 type="password"
@@ -94,20 +108,22 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="Mot de passe"
-                className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400"
               />
-            </div>
+            </motion.div>
             {error && <p className="text-red-500 text-center">{error}</p>}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full py-3 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
               disabled={loading}
             >
               {loading ? 'Connexion...' : 'Se connecter'}
-            </button>
+            </motion.button>
           </form>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };
