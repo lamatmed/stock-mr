@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma"; // Utilise le PrismaClient global
 import { cookies } from "next/headers"; // Next.js 15
 
-const prisma = new PrismaClient();
-
-export async function GET() { // req supprimé car non utilisé
+export async function GET() {
     try {
-      const cookieStore = await cookies(); // ATTENTION : cookies() doit être await dans Next.js 15
-      const userId = cookieStore.get("userId")?.value; // Accès correct au cookie
+      const cookieStore = cookies(); // Pas besoin de await
+      const userId = (await cookieStore).get("userId")?.value;
    
       if (!userId) {
         return NextResponse.json({ message: "Utilisateur non connecté" }, { status: 401 });
