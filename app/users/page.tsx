@@ -28,7 +28,30 @@ export default function UsersPage() {
  const [user, setUser] = useState(null);
  
 
-  
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/user'); // Endpoint pour récupérer l'utilisateur
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
+
+          // 🔐 Vérifie si l'utilisateur n'est pas admin
+          if (!userData.admin) {
+            router.push('/'); // Redirige vers l'accueil si pas admin
+          }
+        } else {
+          router.push('/login'); // Redirige vers login si non connecté
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération de l'utilisateur :", error);
+        router.push('/login'); // Redirige en cas d'erreur
+      }
+    };
+
+    setTimeout(fetchUser, 10); // Attendre 1 seconde avant d'exécuter fetchUser
+  }, []);
+
 
   useEffect(() => {
     fetchUsers();
