@@ -108,7 +108,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/">
-              <Image className="w-15 h-15" src={logo} alt="stok-app" priority={true} />
+              <Image  src={logo} alt="stok-app" width={50}  height={50}/>
             </Link>
             <div className="hidden md:block">
               <div className="flex items-baseline ml-10 space-x-4">

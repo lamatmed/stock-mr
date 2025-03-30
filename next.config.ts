@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverActions: true, // Active les actions serveur
+    serverActions:{}
   },
   
   reactStrictMode: true,

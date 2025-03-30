@@ -156,7 +156,7 @@ export default function ClientsPage() {
   }
   if (loading) return <Loader/>;
   return (
-    <div className="max-w-xl mx-auto p-4 bg-white mt-5">
+    <div className="max-w-xl mx-auto p-4 bg-white mt-5 text-black">
       <h1 className="text-xl font-bold mb-4 text-center">Gestion des Clients</h1>
 
       {/* Barre de recherche */}

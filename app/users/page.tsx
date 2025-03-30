@@ -130,7 +130,7 @@ export default function UsersPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-white mt-5">
+    <div className="max-w-xl mx-auto p-4 bg-white mt-5 text-black">
       <h1 className="text-xl font-bold mb-4 text-center">Gestion des Utilisateurs</h1>
       
       <div className="bg-white p-4 rounded shadow mb-4">
