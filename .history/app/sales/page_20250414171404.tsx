@@ -238,41 +238,37 @@ export default function SalesPage() {
     const doc = new jsPDF({
       orientation: "portrait",
       unit: "mm",
-      format: [80, 150],
+      format: [80, 150], // Formato 80x150mm
     });
 
     const now = new Date();
     const dateStr = now.toLocaleDateString();
     const timeStr = now.toLocaleTimeString();
-    const invoiceId = `FAT-${now.getTime()}`;
+    const invoiceId = `INV-${now.getTime()}`;
 
     const logo = new Image();
-    logo.src = "/lo.jpg";
+    logo.src = "/lo.jpg"; // Vérifie le chemin du logo
 
     logo.onload = () => {
-      doc.addImage(logo, "PNG", 25, 5, 30, 20);
+      doc.addImage(logo, "PNG", 25, 5, 30, 20); // Logo centré
 
+      // Informations de l'entreprise
       doc.setFontSize(10);
       doc.text("CRYSTAL PNEUS ANGOLA LDA", 40, 30, { align: "center" });
       doc.text("NIF: 50001011413", 40, 35, { align: "center" });
       doc.text("Endereço: KM28/Viana Estrada N230", 40, 40, { align: "center" });
-      doc.text("Tel: 942111021 / 938650011", 40, 45, { align: "center" });
+      doc.text("Tel: 942111021/93865", 40, 45, { align: "center" }); // Numéro de téléphone ajouté
 
+      // Informations de la facture
       doc.text(`Data: ${dateStr} ${timeStr}`, 40, 50, { align: "center" });
       doc.text(`Fatura Nº: ${invoiceId}`, 40, 55, { align: "center" });
 
-      // 🔹 Informações do cliente
-      if (selectedClient) {
-        doc.text("Cliente:", 5, 62);
-        doc.text(`Nome: ${selectedClient.nom}`, 5, 67);
-        doc.text(`Telefone: ${selectedClient.tel}`, 5, 72);
-        doc.text(`NIF: ${selectedClient.nif || "N/A"}`, 5, 77);
-      }
+      // Ligne de séparation
+      doc.text(".............................................................", 40, 60, { align: "center" });
 
-      const startY = selectedClient ? 82 : 65;
-
+      // Tableau des produits
       autoTable(doc, {
-        startY,
+        startY: 65,
         margin: { left: 4 },
         head: [["Produto", "Qtd", "P.U", "Total"]],
         body: cart.map((item) => [
@@ -293,19 +289,28 @@ export default function SalesPage() {
         },
       });
 
-      const finalY = (doc as any).lastAutoTable.finalY || startY + 10;
+      const finalY = (doc as any).lastAutoTable.finalY || 75;
 
       doc.setFontSize(10);
-      doc.text(`Total: ${cart.reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)} Kz`, 40, finalY + 5, { align: "center" });
+      doc.text(
+        `Total: ${cart.reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)} Kz`,
+        40,
+        finalY + 5,
+        { align: "center" }
+      );
 
+      // Message de remerciement
+      doc.setFontSize(10);
       doc.text("Obrigado pela sua compra!", 40, finalY + 15, { align: "center" });
+
+      // Ligne de fin et info sur l'app
       doc.text(".............................................................", 40, finalY + 25, { align: "center" });
       doc.text("Fatura gerada por Stock-App V1.0.0", 40, finalY + 30, { align: "center" });
 
+      // Sauvegarde ou affichage
       doc.save(`${invoiceId}.pdf`);
     };
   };
-
 
       
  
