@@ -229,89 +229,90 @@ export default function SalesPage() {
     }
 };
 
-  const generateInvoice = () => {
-    if (cart.length === 0) {
-      toast.error("Nenhum produto no carrinho para gerar a fatura.");
-      return;
-    }
+const generateInvoice = () => {
+  if (cart.length === 0) {
+    toast.error("Aucun produit dans le panier pour générer la facture.");
+    return;
+  }
 
-    const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: [80, 150], // Formato 80x150mm
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: [80, 150], // Format 80x150mm
+  });
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString();
+  const timeStr = now.toLocaleTimeString();
+  const invoiceId = `INV-${now.getTime()}`;
+
+  // Chargement et affichage du logo
+  const logo = new Image();
+  logo.src = "/lok.jpg"; // Vérifie le chemin du logo
+
+  logo.onload = () => {
+    doc.addImage(logo, "PNG", 25, 5, 30, 20); // Logo centré
+
+    // Informations de l'entreprise
+    doc.setFontSize(10);
+    doc.text("CRYSTAL PNEUS ANGOLA LDA", 40, 30, { align: "center" });
+    doc.text("NIF: 5000", 40, 35, { align: "center" });
+    doc.text("Adresse: Catete-Bengo", 40, 40, { align: "center" });
+
+    // Informations de la facture (date, numéro de facture)
+    doc.text(`Date: ${dateStr} ${timeStr}`, 40, 45, { align: "center" });
+    doc.text(`Facture N°: ${invoiceId}`, 40, 50, { align: "center" });
+
+    // Ligne de points
+    doc.text(".............................................................", 40, 55, { align: "center" });
+
+    // Génération du tableau des produits
+    autoTable(doc, {
+      startY: 60, // Décalage pour commencer le tableau
+      margin: { left: 4 },
+      head: [["Produit", "Qté", "P.U", "Total"]],
+      body: cart.map((item) => [
+        item.productName.substring(0, 10),
+        item.quantity,
+        item.unitPrice.toFixed(2),
+        item.totalPrice.toFixed(2),
+      ]),
+      styles: {
+        fontSize: 8,
+        halign: "left",
+      },
+      columnStyles: {
+        0: { cellWidth: 25, halign: "left" },
+        1: { cellWidth: 10, halign: "center" },
+        2: { cellWidth: 15, halign: "right" },
+        3: { cellWidth: 20, halign: "right" },
+      },
     });
 
-    const now = new Date();
-    const dateStr = now.toLocaleDateString();
-    const timeStr = now.toLocaleTimeString();
-    const invoiceId = `INV-${now.getTime()}`;
+    const finalY = (doc as any).lastAutoTable.finalY || 75;
 
-    const logo = new Image();
-    logo.src = "/lok.jpg"; // Verifica o caminho do logotipo
+    doc.setFontSize(10);
+    doc.text(
+      `Total: ${cart.reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)} MRU`,
+      40,
+      finalY + 5,
+      { align: "center" }
+    );
 
-    logo.onload = () => {
-      doc.addImage(logo, "PNG", 25, 5, 30, 20); // Logotipo centralizado
+    // Message de remerciement centré
+    doc.setFontSize(10);
+    doc.text("Merci de votre achat !", 40, finalY + 15, { align: "center" });
 
-      // Informações da empresa
-      doc.setFontSize(10);
-      doc.text("CRYSTAL PNEUS ANGOLA LDA", 40, 30, { align: "center" });
-      doc.text("NIF: 50001011413", 40, 35, { align: "center" });
-      doc.text("Endereço: KM28/Viana Estrada N230", 40, 40, { align: "center" });
+    // Ligne de points et message de génération de la facture
+    doc.text(".............................................................", 40, finalY + 25, { align: "center" });
+    doc.text("Facture générée par Stock-App V1.0.0", 40, finalY + 30, { align: "center" });
+    doc.text("Certificado AGT/2025/MK77/CATETE", 40, finalY + 35, { align: "center" });
 
-      // Informações da fatura (data, número da fatura)
-      doc.text(`Data: ${dateStr} ${timeStr}`, 40, 45, { align: "center" });
-      doc.text(`Fatura Nº: ${invoiceId}`, 40, 50, { align: "center" });
-
-      // Linha pontilhada
-      doc.text(".............................................................", 40, 55, { align: "center" });
-
-      // Tabela dos produtos
-      autoTable(doc, {
-        startY: 60,
-        margin: { left: 4 },
-        head: [["Produto", "Qtd", "P.U", "Total"]],
-        body: cart.map((item) => [
-          item.productName.substring(0, 10),
-          item.quantity,
-          item.unitPrice.toFixed(2),
-          item.totalPrice.toFixed(2),
-        ]),
-        styles: {
-          fontSize: 8,
-          halign: "left",
-        },
-        columnStyles: {
-          0: { cellWidth: 25, halign: "left" },
-          1: { cellWidth: 10, halign: "center" },
-          2: { cellWidth: 15, halign: "right" },
-          3: { cellWidth: 20, halign: "right" },
-        },
-      });
-
-      const finalY = (doc as any).lastAutoTable.finalY || 75;
-
-      doc.setFontSize(10);
-      doc.text(
-        `Total: ${cart.reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)} KZ`,
-        40,
-        finalY + 5,
-        { align: "center" }
-      );
-
-      // Mensagem de agradecimento
-      doc.setFontSize(10);
-      doc.text("Obrigado pela sua compra!", 40, finalY + 15, { align: "center" });
-
-      // Linha pontilhada e mensagem final
-      doc.text(".............................................................", 40, finalY + 25, { align: "center" });
-      doc.text("Fatura gerada por Stock-App V1.0.0", 40, finalY + 30, { align: "center" });
-      doc.text("Certificado AGT/../../..", 40, finalY + 35, { align: "center" });
-
-      // Salvar como PDF
-      doc.save(`fatura_${invoiceId}.pdf`);
-    };
+    // Génération de la facture en PDF
+    doc.save(`facture_${invoiceId}.pdf`);
+   
   };
-
+};
 
 const filteredProduct = products.find(
   (product) =>

@@ -48,7 +48,7 @@ const Hero = () => {
             {/* Image */}
             <div className="lg:w-1/2 flex justify-center">
               <Image
-                src="/R.jpg" // Remplace avec une vraie image
+                src="/R." // Remplace avec une vraie image
                 alt="Gestion de stock"
                 width={500}
                 height={500}

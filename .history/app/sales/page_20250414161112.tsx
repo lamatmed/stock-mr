@@ -292,7 +292,7 @@ export default function SalesPage() {
 
       doc.setFontSize(10);
       doc.text(
-        `Total: ${cart.reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)} KZ`,
+        `Total: ${cart.reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)} MRU`,
         40,
         finalY + 5,
         { align: "center" }
