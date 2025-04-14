@@ -413,7 +413,7 @@ export default function SalesPage() {
         <div className="border p-4 rounded-md bg-gray-100 mt-2">
           {cart.map((item, index) => (
             <div key={index} className="flex justify-between items-center mb-2">
-              <p className="text-sm text-gray-700">{item.productName} - {item.quantity} x {item.unitPrice} Kz = {item.totalPrice} Kz</p>
+              <p className="text-sm text-gray-700">{item.productName} - {item.quantity} x {item.unitPrice} Kz = {item.totalPrice} K</p>
               <button onClick={() => removeFromCart(index)} className="bg-red-500 text-white px-2 py-1 rounded">X</button>
             </div>
           ))}
