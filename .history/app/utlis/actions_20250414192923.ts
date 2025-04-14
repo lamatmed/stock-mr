@@ -532,7 +532,7 @@ export async function updateClient(id: string, nom?: string, tel?: string, nif?:
       const isPasswordValid = bcrypt.compareSync(password, user.password);
   
       if (!isPasswordValid) {
-        return { error: "كلمة مرور غير صحيحة" };
+        return { error: "Mot de passe incorrect." };
       }
   
       (await

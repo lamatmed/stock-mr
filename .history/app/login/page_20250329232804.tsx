@@ -28,7 +28,7 @@ const Login = () => {
           }
         }
       } catch (error) {
-        console.error("خطأ أثناء جلب المستخدم :", error);
+        console.error("Erreur lors de la récupération de l'utilisateur :", error);
       }
     };
     fetchUser();
@@ -37,7 +37,7 @@ const Login = () => {
   const notify = (message: string, type: 'success' | 'error') => {
     Swal.fire({
       icon: type,
-      title: type === 'success' ? 'نجاح' : 'خطأ',
+      title: type === 'success' ? 'Succès' : 'Erreur',
       text: message,
       confirmButtonColor: type === 'success' ? '#28a745' : '#dc3545',
     });
@@ -50,22 +50,22 @@ const Login = () => {
     try {
       const result = await loginUser(nom, password);
       if (result.success) {
-        notify('تم تسجيل الدخول بنجاح!', 'success');
-        router.push('/sales');
+        notify('Connexion réussie!', 'success');
+        router.push('/');
       } else {
-        setError(result.error || 'حدث خطأ ما');
-        notify(result.error || 'حدث خطأ ما', 'error');
+        setError(result.error || 'Une erreur est survenue');
+        notify(result.error || 'Une erreur est survenue', 'error');
       }
     } catch (err) {
-      setError('حدث خطأ أثناء تسجيل الدخول.');
-      notify('حدث خطأ أثناء تسجيل الدخول.', 'error');
+      setError('Erreur lors de la connexion.');
+      notify('Erreur lors de la connexion.', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div dir="rtl" className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-pink-500">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-pink-500">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -73,7 +73,7 @@ const Login = () => {
         className="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl"
       >
         <h1 className="text-3xl font-semibold text-center text-gray-700 mb-6">
-          <FaSignInAlt className="inline ml-2 text-green-500" /> تسجيل الدخول
+          <FaSignInAlt className="inline mr-2 text-green-500" /> Connexion
         </h1>
         {loading ? (
           <Loader />
@@ -85,14 +85,14 @@ const Login = () => {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="flex items-center border border-gray-300 p-3 rounded-lg shadow-sm bg-gray-50"
             >
-              <FaUserAlt className="text-blue-500 ml-3" />
+              <FaUserAlt className="text-blue-500 mr-3" />
               <input
                 type="text"
                 value={nom}
                 onChange={(e) => setNom(e.target.value)}
                 required
-                placeholder="اسم المستخدم"
-                className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400 text-right"
+                placeholder="Nom d'utilisateur"
+                className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400"
               />
             </motion.div>
             <motion.div
@@ -101,14 +101,14 @@ const Login = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex items-center border border-gray-300 p-3 rounded-lg shadow-sm bg-gray-50"
             >
-              <FaLock className="text-red-500 ml-3" />
+              <FaLock className="text-red-500 mr-3" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="كلمة المرور"
-                className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400 text-right"
+                placeholder="Mot de passe"
+                className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400"
               />
             </motion.div>
             {error && <p className="text-red-500 text-center">{error}</p>}
@@ -119,7 +119,7 @@ const Login = () => {
               className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
               disabled={loading}
             >
-              {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
+              {loading ? 'Connexion...' : 'Se connecter'}
             </motion.button>
           </form>
         )}

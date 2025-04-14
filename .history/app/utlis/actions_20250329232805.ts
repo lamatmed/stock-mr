@@ -526,13 +526,13 @@ export async function updateClient(id: string, nom?: string, tel?: string, nif?:
       });
   
       if (!user) {
-        return { error: "لم يتم العثور على المستخدم" };
+        return { error: "Utilisateur non trouvé." };
       }
   
       const isPasswordValid = bcrypt.compareSync(password, user.password);
   
       if (!isPasswordValid) {
-        return { error: "كلمة مرور غير صحيحة" };
+        return { error: "Mot de passe incorrect." };
       }
   
       (await
