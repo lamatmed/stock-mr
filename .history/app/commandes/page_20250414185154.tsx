@@ -179,7 +179,8 @@ export default function InvoicesPage() {
   
       // Séparateur final
       doc.text("--------------------------------------------------", 40, finalY + 20, { align: "center" });
-      doc.text("Fatura gerada por Stock-App V1.0.0", 40, finalY + 30, { align: "center" });
+      doc.text("Facture générée par Stock-App V1.0.0", 40, finalY + 25, { align: "center" });
+      doc.text("Certificado AGT/2025/MK77/CATETE", 40, finalY + 30, { align: "center" });
   
       // Génération du PDF
       doc.save(`Facture_${invoiceId}.pdf`);

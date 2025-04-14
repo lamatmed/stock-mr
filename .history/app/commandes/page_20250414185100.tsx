@@ -141,9 +141,8 @@ export default function InvoicesPage() {
       doc.text("Endereço: KM28/Viana Estrada N230", 40, 40, { align: "center" });
   
       // Informations de la facture
-      doc.text(`Data: ${dateStr} ${timeStr}`, 40, 50, { align: "center" });
-      doc.text(`Fatura Nº: ${invoiceId}`, 40, 55, { align: "center" });
-
+      doc.text(`Date: ${dateStr} ${timeStr}`, 40, 45, { align: "center" }); // Ajout de l'heure complète
+      doc.text(`Facture N°: ${invoiceId}`, 40, 50, { align: "center" });
   
       // Séparateur
       doc.text("--------------------------------------------------", 40, 55, { align: "center" });
@@ -172,14 +171,15 @@ export default function InvoicesPage() {
   
       // Total
       doc.setFontSize(10);
-      doc.text(`Total: ${invoice.totalAmount.toFixed(2)} Kz`, 40, finalY + 5, { align: "center" });
+      doc.text(`Total: ${invoice.totalAmount.toFixed(2)} MRU`, 40, finalY + 5, { align: "center" });
   
       // Message de remerciement
-      doc.text("Obrigado pela sua compra!", 40, finalY + 15, { align: "center" });
+      doc.text("Merci pour votre achat !", 40, finalY + 15, { align: "center" });
   
       // Séparateur final
       doc.text("--------------------------------------------------", 40, finalY + 20, { align: "center" });
-      doc.text("Fatura gerada por Stock-App V1.0.0", 40, finalY + 30, { align: "center" });
+      doc.text("Facture générée par Stock-App V1.0.0", 40, finalY + 25, { align: "center" });
+      doc.text("Certificado AGT/2025/MK77/CATETE", 40, finalY + 30, { align: "center" });
   
       // Génération du PDF
       doc.save(`Facture_${invoiceId}.pdf`);
