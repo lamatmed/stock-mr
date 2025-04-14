@@ -256,7 +256,7 @@ export default function SalesPage() {
       doc.text("CRYSTAL PNEUS ANGOLA LDA", 40, 30, { align: "center" });
       doc.text("NIF: 50001011413", 40, 35, { align: "center" });
       doc.text("Endereço: KM28/Viana Estrada N230", 40, 40, { align: "center" });
-      doc.text("Tel: 924111042 / 929178671", 40, 45, { align: "center" });
+      doc.text("Tel: 924111042 / 938650011", 40, 45, { align: "center" });
 
       doc.text(`Data: ${dateStr} ${timeStr}`, 40, 50, { align: "center" });
       doc.text(`Fatura Nº: ${invoiceId}`, 40, 55, { align: "center" });
