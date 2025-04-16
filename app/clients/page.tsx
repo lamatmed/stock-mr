@@ -177,7 +177,7 @@ export default function ClientsPage() {
           className="border p-2 rounded w-full mb-2"
         />
         <input
-          type="text"
+          type="number"
           placeholder="الهاتف"
           value={tel}
           onChange={(e) => setTel(e.target.value)}

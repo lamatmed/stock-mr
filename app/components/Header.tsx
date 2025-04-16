@@ -1,16 +1,26 @@
-'use client';
+'use client'
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/lok.jpg";
-import { FaSignInAlt, FaSignOutAlt, FaBars, FaTimes, FaProductHunt, FaFileInvoiceDollar, FaUserTie } from "react-icons/fa";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { MdAddBox, MdProductionQuantityLimits } from "react-icons/md";
-import { FaCartShopping, FaUsersBetweenLines } from "react-icons/fa6";
-
+import {
+  FiAlertTriangle,
+  FiLogIn,
+  FiLogOut,
+  FiMenu,
+  FiX,
+  FiPackage,
+  FiShoppingCart,
+  FiUsers,
+  FiUser,
+  FiPlusSquare,
+  FiFileText,
+  FiGrid,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  FiSettings
+} from "react-icons/fi";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { FiAlertTriangle } from "react-icons/fi";
 
 interface User {
   nom: string;
@@ -35,7 +45,7 @@ const Header = () => {
         setAdmin(false);
       }
     } catch (error) {
-      console.error("خطأ في جلب المستخدم:", error);
+      console.error("Erreur lors de la récupération de l'utilisateur :", error);
       setUser(null);
       setAdmin(false);
     }
@@ -50,14 +60,14 @@ const Header = () => {
   const handleSignOut = async () => {
     try {
       const result = await Swal.fire({
-        title: "هل أنت متأكد أنك تريد تسجيل الخروج؟",
-        text: "ستحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى حسابك.",
-        icon: "warning",
+        title: "Êtes-vous sûr de vouloir vous déconnecter ?",
+        text: "Vous devrez vous reconnecter pour accéder à votre compte.",
+        icon: "question",
         showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "نعم، تسجيل الخروج",
-        cancelButtonText: "إلغاء",
+        confirmButtonColor: "#3b82f6",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Oui, déconnecter",
+        cancelButtonText: "Annuler",
       });
 
       if (!result.isConfirmed) return;
@@ -68,135 +78,251 @@ const Header = () => {
 
       Swal.fire({
         icon: "success",
-        title: "تم تسجيل الخروج بنجاح",
-        text: "تم تسجيل خروجك بنجاح.",
-        confirmButtonText: "موافق",
+        title: "Déconnexion réussie",
+        text: "Vous avez été déconnecté avec succès.",
+        confirmButtonText: "OK",
       });
-
       router.push("/");
+
     } catch (error) {
-      console.error("خطأ أثناء تسجيل الخروج:", error);
+      console.error("Erreur lors de la déconnexion :", error);
       Swal.fire({
         icon: "error",
-        title: "خطأ",
-        text: "حدث خطأ أثناء تسجيل الخروج.",
-        confirmButtonText: "موافق",
+        title: "Erreur",
+        text: "Une erreur est survenue lors de la déconnexion.",
+        confirmButtonText: "OK",
       });
     }
   };
 
+  // Style commun pour les liens
+  const navLinkStyle = "flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-blue-50 hover:text-blue-600";
+  const iconStyle = "flex-shrink-0";
+
   return (
-    <header className="bg-gray-200">
+    <header className="bg-white shadow-sm border-b border-gray-100">
       <nav className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/">
-              <Image src={logo} alt="stok-app" width={50} height={50} />
+          {/* Logo et navigation principale */}
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src={logo}
+                alt="StockLocal"
+                height={40}
+                width={40}
+                className="rounded-lg"
+              />
+              <span className="text-xl font-semibold text-gray-800 hidden sm:block">
+                Stock<span className="text-blue-600">Local</span>
+              </span>
             </Link>
-            <div className="hidden md:block">
-              <div className="flex items-baseline ml-10 space-x-4">
-                {user && (
-                  <>
-                    {admin && (
-                      <>
-                        <Link href="/products" className="px-3 py-2 text-sm font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                          <FaProductHunt className="text-blue-500" size={24} /> المنتجات
-                        </Link>
-                        <Link href="/commandes" className="px-3 py-2 text-sm font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                          <FaFileInvoiceDollar className="text-blue-500" size={24} /> الفواتير
-                        </Link>
-                        <Link href="/update" className="px-3 py-2 text-sm font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                          <MdAddBox className="text-blue-500" size={24} /> إضافة
-                        </Link>
-                      </>
-                    )}
-                    <Link href="/sales" className="px-3 py-2 text-sm font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                      <FaCartShopping className="text-blue-500" size={24} /> بيع
-                    </Link>
-                    <Link href="/stock" className="px-3 py-2 text-sm font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                      <MdProductionQuantityLimits className="text-blue-500" size={24} /> المخزون
-                    </Link>
-                    <Link href="/clients" className="px-3 py-2 text-sm font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                      <FaUsersBetweenLines className="text-blue-500" size={24} /> الزبائن
-                    </Link>
-                    <Link href="/alerts" className="px-3 py-2 text-sm font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                      <FiAlertTriangle className="text-red-500" size={24} /> التنبيهات
-                    </Link>
-                  </>
-                )}
-              </div>
+
+            {/* Navigation desktop */}
+            <div className="hidden md:flex items-center gap-1">
+              {user && (
+                <>
+                  {admin && (
+                    <>
+                      <Link href="/products" className={navLinkStyle}>
+                        <FiPackage className={`${iconStyle} text-blue-500`} size={18} />
+                        <span>Produits</span>
+                      </Link>
+                      <Link href="/commandes" className={navLinkStyle}>
+                        <FiFileText className={`${iconStyle} text-green-500`} size={18} />
+                        <span>Factures</span>
+                      </Link>
+                      <Link href="/update" className={navLinkStyle}>
+                        <FiPlusSquare className={`${iconStyle} text-purple-500`} size={18} />
+                        <span>Ajouter</span>
+                      </Link>
+                    </>
+                  )}
+
+                  <Link href="/sales" className={navLinkStyle}>
+                    <FiShoppingCart className={`${iconStyle} text-orange-500`} size={18} />
+                    <span>Vendre</span>
+                  </Link>
+                  <Link href="/stock" className={navLinkStyle}>
+                    <FiPackage className={`${iconStyle} text-amber-500`} size={18} />
+                    <span>Stock</span>
+                  </Link>
+                  <Link href="/clients" className={navLinkStyle}>
+                    <FiUsers className={`${iconStyle} text-emerald-500`} size={18} />
+                    <span>Clients</span>
+                  </Link>
+                  <Link href="/alerts" className={navLinkStyle}>
+                    <FiAlertTriangle className={`${iconStyle} text-red-500`} size={18} />
+                    <span>Alertes</span>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 
-          <div className="flex items-center ml-auto">
-            {!user && (
-              <Link href="/login" className="mr-3 text-gray-900 hover:bg-blue-600 font-bold">
-                <FaSignInAlt className="inline mr-1 text-green-700 text-2xl" /> تسجيل الدخول
+          {/* Actions utilisateur */}
+          <div className="flex items-center gap-4">
+            {!user ? (
+              <Link
+                href="/login"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+              >
+                <FiLogIn size={16} />
+                <span>Connexion</span>
               </Link>
-            )}
-            {user && (
+            ) : (
               <>
                 {admin && (
-                  <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4">
-                    <Link href="/users" className="flex items-center text-gray-900 hover:bg-blue-200 font-bold p-1 sm:p-2 rounded text-sm sm:text-base">
-                      <FaUserTie className="mr-1 sm:mr-2 text-blue-700" size={24} /> المستخدمين
+                  <div className="hidden md:flex items-center gap-2">
+                    <Link href="/users" className={navLinkStyle}>
+                      <FiUser className={`${iconStyle} text-indigo-500`} size={18} />
+                      <span className="hidden lg:inline">Utilisateurs</span>
                     </Link>
-                    <Link href="/dashboard" className="flex items-center text-gray-900 hover:bg-blue-200 font-bold p-1 sm:p-2 rounded text-sm sm:text-base">
-                      <LuLayoutDashboard className="mr-1 sm:mr-2 text-green-700" size={24} /> لوحة التحكم
+                    <Link href="/dashboard" className={navLinkStyle}>
+                      <FiGrid className={`${iconStyle} text-teal-500`} size={18} />
+                      <span className="hidden lg:inline">Dashboard</span>
                     </Link>
                   </div>
                 )}
+
                 <button
                   onClick={handleSignOut}
-                  className="mx-3 text-gray-900 hover:bg-blue-200 font-bold"
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
                 >
-                  <FaSignOutAlt className="inline mr-1 text-red-700 text-2xl" /> تسجيل الخروج
+                  <FiLogOut className="text-red-500" size={16} />
+                  <span>Déconnexion</span>
                 </button>
               </>
             )}
+
+            {/* Bouton menu mobile */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-800 md:hidden hover:text-gray-600"
+              className="p-2 text-gray-500 rounded-md md:hidden hover:text-gray-700 hover:bg-gray-100"
             >
-              {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
         </div>
       </nav>
 
+      {/* Menu mobile */}
       {isMenuOpen && (
-        <div className="bg-gray-200 md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {user && (
-              <>
-                {admin && (
-                  <>
-                    <Link href="/products" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                      <FaProductHunt className="inline mr-1" /> المنتجات
-                    </Link>
-                    <Link href="/commandes" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                      <FaFileInvoiceDollar className="inline mr-1" /> الفواتير
-                    </Link>
-                    <Link href="/update" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                      <MdAddBox className="inline mr-1" /> إضافة
-                    </Link>
-                  </>
-                )}
-                <Link href="/stock" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                  <MdProductionQuantityLimits className="inline mr-1" /> المخزون
-                </Link>
-                <Link href="/sales" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                  <FaCartShopping className="inline mr-1" /> بيع
-                </Link>
-                <Link href="/clients" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                  <FaUsersBetweenLines className="inline mr-1" /> الزبائن
-                </Link>
-                <Link href="/alerts" className="block px-3 py-2 text-base font-medium text-gray-800 rounded-md hover:bg-gray-700 hover:text-white">
-                  <FiAlertTriangle className="text-red-500 inline mr-2" /> التنبيهات
-                </Link>
-              </>
-            )}
-          </div>
+        <div className="px-4 pt-2 pb-4 space-y-1 md:hidden bg-white border-t border-gray-100">
+          {user ? (
+            <>
+              {admin && (
+                <>
+                  <Link
+                    href="/products"
+                    className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FiPackage className="text-blue-500" size={18} />
+                      <span>Produits</span>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/commandes"
+                    className="block px-3 py-2 rounded-md text-gray-900 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FiFileText className="text-green-500" size={18} />
+                      <span>Factures</span>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/update"
+                    className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FiPlusSquare className="text-purple-500" size={18} />
+                      <span>Ajouter</span>
+                    </div>
+                  </Link>
+                </>
+              )}
+
+              <Link
+                href="/sales"
+                className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <FiShoppingCart className="text-orange-500" size={18} />
+                  <span>Vendre</span>
+                </div>
+              </Link>
+              <Link
+                href="/stock"
+                className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <FiPackage className="text-amber-500" size={18} />
+                  <span>Stock</span>
+                </div>
+              </Link>
+              <Link
+                href="/clients"
+                className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <FiUsers className="text-emerald-500" size={18} />
+                  <span>Clients</span>
+                </div>
+              </Link>
+              <Link
+                href="/alerts"
+                className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <FiAlertTriangle className="text-red-500" size={18} />
+                  <span>Alertes</span>
+                </div>
+              </Link>
+
+              {admin && (
+                <>
+                  <div className="border-t border-gray-200 my-2"></div>
+                  <Link
+                    href="/users"
+                    className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FiUser className="text-indigo-500" size={18} />
+                      <span>Utilisateurs</span>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/dashboard"
+                    className="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FiGrid className="text-teal-500" size={18} />
+                      <span>Dashboard</span>
+                    </div>
+                  </Link>
+                </>
+              )}
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="flex items-center justify-center gap-2 px-3 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <FiLogIn size={16} />
+              <span>Connexion</span>
+            </Link>
+          )}
         </div>
       )}
     </header>

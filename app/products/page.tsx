@@ -125,14 +125,17 @@ export default function Home() {
 
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
     setSearch(e.target.value);
+
     const filtered = products.filter((p) =>
-      p.code.toString().toLowerCase().includes(e.target.value.toLowerCase())
-      ||
-      p.codeBar?.toLowerCase().includes(e.target.value.toLowerCase())
+      p.code.toString().toLowerCase() === value ||
+      p.codeBar?.toLowerCase() === value
     );
+
     setFilteredProducts(filtered);
   };
+
 
   // Pagination
   const indexOfLastProduct = currentPage * productsPerPage;
