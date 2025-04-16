@@ -45,7 +45,7 @@ const Header = () => {
         setAdmin(false);
       }
     } catch (error) {
-      console.error("Erreur lors de la récupération de l'utilisateur :", error);
+      console.error("خطأ في جلب بيانات المستخدم:", error);
       setUser(null);
       setAdmin(false);
     }
@@ -60,14 +60,14 @@ const Header = () => {
   const handleSignOut = async () => {
     try {
       const result = await Swal.fire({
-        title: "Êtes-vous sûr de vouloir vous déconnecter ?",
-        text: "Vous devrez vous reconnecter pour accéder à votre compte.",
+        title: "هل أنت متأكد من تسجيل الخروج؟",
+        text: "سوف تحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى حسابك.",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3b82f6",
         cancelButtonColor: "#6b7280",
-        confirmButtonText: "Oui, déconnecter",
-        cancelButtonText: "Annuler",
+        confirmButtonText: "نعم، سجل الخروج",
+        cancelButtonText: "إلغاء",
       });
 
       if (!result.isConfirmed) return;
@@ -78,25 +78,25 @@ const Header = () => {
 
       Swal.fire({
         icon: "success",
-        title: "Déconnexion réussie",
-        text: "Vous avez été déconnecté avec succès.",
-        confirmButtonText: "OK",
+        title: "تم تسجيل الخروج بنجاح",
+        text: "لقد تم تسجيل خروجك بنجاح.",
+        confirmButtonText: "موافق",
       });
       router.push("/");
 
     } catch (error) {
-      console.error("Erreur lors de la déconnexion :", error);
+      console.error("خطأ أثناء تسجيل الخروج:", error);
       Swal.fire({
         icon: "error",
-        title: "Erreur",
-        text: "Une erreur est survenue lors de la déconnexion.",
-        confirmButtonText: "OK",
+        title: "خطأ",
+        text: "حدث خطأ أثناء محاولة تسجيل الخروج.",
+        confirmButtonText: "موافق",
       });
     }
   };
 
   // Style commun pour les liens
-  const navLinkStyle = "flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-blue-50 hover:text-blue-600";
+  const navLinkStyle = "flex items-center gap-2 px-3 py-2 rounded-md transition-colors text-black hover:bg-blue-50 hover:text-blue-600";
   const iconStyle = "flex-shrink-0";
 
   return (
@@ -114,7 +114,7 @@ const Header = () => {
                 className="rounded-lg"
               />
               <span className="text-xl font-semibold text-gray-800 hidden sm:block">
-                Stock<span className="text-blue-600">Local</span>
+                <span className="text-blue-600">المخزن</span> المحلي
               </span>
             </Link>
 
@@ -126,34 +126,34 @@ const Header = () => {
                     <>
                       <Link href="/products" className={navLinkStyle}>
                         <FiPackage className={`${iconStyle} text-blue-500`} size={18} />
-                        <span>Produits</span>
+                        <span>المنتجات</span>
                       </Link>
                       <Link href="/commandes" className={navLinkStyle}>
                         <FiFileText className={`${iconStyle} text-green-500`} size={18} />
-                        <span>Factures</span>
+                        <span>الفواتير</span>
                       </Link>
                       <Link href="/update" className={navLinkStyle}>
                         <FiPlusSquare className={`${iconStyle} text-purple-500`} size={18} />
-                        <span>Ajouter</span>
+                        <span>إضافة</span>
                       </Link>
                     </>
                   )}
 
                   <Link href="/sales" className={navLinkStyle}>
                     <FiShoppingCart className={`${iconStyle} text-orange-500`} size={18} />
-                    <span>Vendre</span>
+                    <span>بيع</span>
                   </Link>
                   <Link href="/stock" className={navLinkStyle}>
                     <FiPackage className={`${iconStyle} text-amber-500`} size={18} />
-                    <span>Stock</span>
+                    <span>المخزون</span>
                   </Link>
                   <Link href="/clients" className={navLinkStyle}>
                     <FiUsers className={`${iconStyle} text-emerald-500`} size={18} />
-                    <span>Clients</span>
+                    <span>العملاء</span>
                   </Link>
                   <Link href="/alerts" className={navLinkStyle}>
                     <FiAlertTriangle className={`${iconStyle} text-red-500`} size={18} />
-                    <span>Alertes</span>
+                    <span>التنبيهات</span>
                   </Link>
                 </>
               )}
@@ -168,7 +168,7 @@ const Header = () => {
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
               >
                 <FiLogIn size={16} />
-                <span>Connexion</span>
+                <span>تسجيل الدخول</span>
               </Link>
             ) : (
               <>
@@ -176,21 +176,21 @@ const Header = () => {
                   <div className="hidden md:flex items-center gap-2">
                     <Link href="/users" className={navLinkStyle}>
                       <FiUser className={`${iconStyle} text-indigo-500`} size={18} />
-                      <span className="hidden lg:inline">Utilisateurs</span>
+                      <span className="hidden lg:inline">المستخدمون</span>
                     </Link>
                     <Link href="/dashboard" className={navLinkStyle}>
                       <FiGrid className={`${iconStyle} text-teal-500`} size={18} />
-                      <span className="hidden lg:inline">Dashboard</span>
+                      <span className="hidden lg:inline">لوحة التحكم</span>
                     </Link>
                   </div>
                 )}
 
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-md hover:bg-gray-200 hover:text-red-500 transition-colors"
                 >
                   <FiLogOut className="text-red-500" size={16} />
-                  <span>Déconnexion</span>
+                  <span className="font-bold">تسجيل الخروج</span>
                 </button>
               </>
             )}
@@ -220,7 +220,7 @@ const Header = () => {
                   >
                     <div className="flex items-center gap-2">
                       <FiPackage className="text-blue-500" size={18} />
-                      <span>Produits</span>
+                      <span>المنتجات</span>
                     </div>
                   </Link>
                   <Link
@@ -230,7 +230,7 @@ const Header = () => {
                   >
                     <div className="flex items-center gap-2">
                       <FiFileText className="text-green-500" size={18} />
-                      <span>Factures</span>
+                      <span>الفواتير</span>
                     </div>
                   </Link>
                   <Link
@@ -240,7 +240,7 @@ const Header = () => {
                   >
                     <div className="flex items-center gap-2">
                       <FiPlusSquare className="text-purple-500" size={18} />
-                      <span>Ajouter</span>
+                      <span>إضافة</span>
                     </div>
                   </Link>
                 </>
@@ -253,7 +253,7 @@ const Header = () => {
               >
                 <div className="flex items-center gap-2">
                   <FiShoppingCart className="text-orange-500" size={18} />
-                  <span>Vendre</span>
+                  <span>بيع</span>
                 </div>
               </Link>
               <Link
@@ -263,7 +263,7 @@ const Header = () => {
               >
                 <div className="flex items-center gap-2">
                   <FiPackage className="text-amber-500" size={18} />
-                  <span>Stock</span>
+                  <span>المخزون</span>
                 </div>
               </Link>
               <Link
@@ -273,7 +273,7 @@ const Header = () => {
               >
                 <div className="flex items-center gap-2">
                   <FiUsers className="text-emerald-500" size={18} />
-                  <span>Clients</span>
+                  <span>العملاء</span>
                 </div>
               </Link>
               <Link
@@ -283,7 +283,7 @@ const Header = () => {
               >
                 <div className="flex items-center gap-2">
                   <FiAlertTriangle className="text-red-500" size={18} />
-                  <span>Alertes</span>
+                  <span>التنبيهات</span>
                 </div>
               </Link>
 
@@ -297,7 +297,7 @@ const Header = () => {
                   >
                     <div className="flex items-center gap-2">
                       <FiUser className="text-indigo-500" size={18} />
-                      <span>Utilisateurs</span>
+                      <span>المستخدمون</span>
                     </div>
                   </Link>
                   <Link
@@ -307,7 +307,7 @@ const Header = () => {
                   >
                     <div className="flex items-center gap-2">
                       <FiGrid className="text-teal-500" size={18} />
-                      <span>Dashboard</span>
+                      <span>لوحة التحكم</span>
                     </div>
                   </Link>
                 </>
@@ -320,7 +320,7 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               <FiLogIn size={16} />
-              <span>Connexion</span>
+              <span>تسجيل الدخول</span>
             </Link>
           )}
         </div>
